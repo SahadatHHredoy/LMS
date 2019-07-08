@@ -1,0 +1,157 @@
+﻿@model LMS.Models.LoanModel
+
+@Styles.Render("~/Content/datePicker")
+@using (Html.BeginForm("Add", "Loan", FormMethod.Post, new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">ঋণ প্রদান</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group ">
+                        @Html.Label("সদস্যের ছবি ", new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            <img id="userImg" src="" width="200" height="100" />
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.MemberId, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.MemberId, new SelectList(Model.MemberList, "Id", "MemberName"), "Choose---", new { @class = "form-control", @onchange = "OnMemberChange(this)" })
+                            @Html.ValidationMessageFor(model => model.MemberId)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.ProjectName, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.ProjectName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ProjectName)
+                        </div>
+                    </div> 
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.TotalInstallment, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.TotalInstallment, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TotalInstallment)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.InstallmentType, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            <label> @Html.RadioButtonFor(model => model.InstallmentType, "Daily") দৈনিক </label>
+                            <label> @Html.RadioButtonFor(model => model.InstallmentType, "Monthly") মাসিক</label>
+                            <label>@Html.RadioButtonFor(model => model.InstallmentType, "Weekly") সাপ্তাহিক</label>
+                            <br/>
+                            @Html.ValidationMessageFor(model => model.InstallmentType)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.Date, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.Date, new { @class = "form-control datePicker", @Value = "" })
+                            @Html.ValidationMessageFor(model => model.Date)
+                        </div>
+                    </div>   
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.FirstInstallment, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.FirstInstallment, new { @class = "form-control datePicker", @Value = "" })
+                            @Html.ValidationMessageFor(model => model.FirstInstallment)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.LoanAmount, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.LoanAmount, new { @class = "form-control", @onkeyup = "AmountCalculation()" })
+                            @Html.ValidationMessageFor(model => model.LoanAmount)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.ProfitAmount, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.ProfitAmount, new { @class = "form-control", @onkeyup = "AmountCalculation()" })
+                            @Html.ValidationMessageFor(model => model.ProfitAmount)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.ServiceAmount, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.ServiceAmount, new { @class = "form-control", @onkeyup = "AmountCalculation()" })
+                            @Html.ValidationMessageFor(model => model.ServiceAmount)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.PayableAmount, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.PayableAmount, new { @class = "form-control", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.PayableAmount)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <a href="@Url.Action("Index","Group")" class="btn btn-danger">ক্যান্সেল</a>
+            <button type="submit" class="btn btn-info pull-right">সেভ</button>
+        </div>
+        <!-- /.box-footer-->
+    </div>
+}
+<!-- /.box -->
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datePicker")
+    <script>
+        function OnMemberChange(obj) {
+
+            if ($(obj).val() != '') {
+                var paramData = { id: $(obj).val() };
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetMemberImg","Member")',
+                    data: JSON.stringify(paramData),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        $("#userImg").attr('src', response.replace("~", " "));
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(textStatus + "! please try again", '<i class="fa fa-exclamation-circle" aria-hidden="true"> Alert</i>');
+                    }
+                });
+            }
+            else {
+                 $("#userImg").attr('src', "");
+            }
+        }
+
+        function AmountCalculation() {
+            var loanAmount = isNaN(parseFloat($("#LoanAmount").val())) ? 0 : parseFloat($("#LoanAmount").val());
+            var profitAmount = isNaN(parseFloat($("#ProfitAmount").val())) ? 0 : parseFloat($("#ProfitAmount").val());
+            var serviceAmount = isNaN(parseFloat($("#ServiceAmount").val())) ? 0 : parseFloat($("#ServiceAmount").val());
+            $("#PayableAmount").val((loanAmount + profitAmount + serviceAmount).toFixed(0));
+        }
+    $(".datePicker").datepicker({ autoclose: true,format:'dd-M-yy' });
+
+    </script>
+}
+
+
