@@ -1,0 +1,71 @@
+﻿@model LMS.Entities.Cost
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm("Edit", "Cost", FormMethod.Post, new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">খরচ </h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.Date, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.Date, new { @class = "form-control datePicker", @Value = Model.Date.DateFormat() })
+                            @Html.ValidationMessageFor(model => model.Date)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.CostDetail, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.CostDetail, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CostDetail)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.Amount, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.Amount, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Amount)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <a href="@Url.Action("Index","Cost")" class="btn btn-danger">ক্যান্সেল</a>
+            <button type="submit" class="btn btn-info pull-right">সেভ</button>
+        </div>
+        <!-- /.box-footer-->
+    </div>
+}
+<!-- /.box -->
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+
+    </script>
+}
+
+

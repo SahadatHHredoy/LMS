@@ -1,0 +1,96 @@
+﻿@model LMS.Models.InstallmentViewModel
+@using PagedList.Mvc
+@Styles.Render("~/Content/PagedList")
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title"></h3>
+
+            <div class="box-tools">
+                <a class="btn btn-sm btn-success" href="@Url.Action("Add","Installment")"><i class="fa fa-plus"></i></a>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+            <div class="form-horizontal">
+                @using (Html.BeginForm("Index", "Installment", FormMethod.Post, new { @class = "", @id = "taxStampDemandSearchForm" }))
+                {
+                    <div class="col-md-12">
+                        <div class="form-group col-md-3">
+                            @Html.Label("তারিখ  :", new { @class = "col-md-5 control-label" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(model => model.DateFrom, new { @class = "form-control input-sm datePicker", @autocomplete = "off" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            @Html.Label("-", new { @class = "col-md-1 control-label" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(model => model.DateTo, new { @class = "form-control input-sm datePicker", @autocomplete = "off" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.Label("সদস্য", new { @class = "col-md-5 control-label" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(model => model.MemberId, new SelectList(Model.MemberList, "Id", "MemberName"), "Choose--", new { @class = "form-control input-sm select2" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-sm btn-success">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                            <a class="btn btn-sm btn-info" href='@Url.Action("Index","Loan")'>
+                                <span class="fa fa-refresh"></span>
+                            </a>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+            <table class="table table-bordered">
+                <tr>
+                    <th></th>
+                    <th>@Html.DisplayNameFor(model => model.InstallmentPageList.FirstOrDefault().Date)</th>
+                    <th>@Html.DisplayNameFor(model => model.InstallmentPageList.FirstOrDefault().MemberId)</th>
+                    <th>@Html.DisplayNameFor(model => model.InstallmentPageList.FirstOrDefault().InstallmentNo)</th>
+                    <th>@Html.DisplayNameFor(model => model.InstallmentPageList.FirstOrDefault().Submit)</th>
+                    <th>@Html.DisplayNameFor(model => model.InstallmentPageList.FirstOrDefault().Undo)</th>
+                    <th>@Html.DisplayNameFor(model => model.InstallmentPageList.FirstOrDefault().Profit)</th>
+                    <th>@Html.DisplayNameFor(model => model.InstallmentPageList.FirstOrDefault().Payment)</th>
+                    <th></th>
+                </tr>
+                @{
+
+                    foreach (var installment in Model.InstallmentPageList)
+                    {
+                        <tr>
+                            <th><img height="50" width="50" src="@Url.Content(installment.Member.Image)"></th>
+                            <th>@installment.Date.DateFormat()</th>
+                            <th>@Html.DisplayFor(model => installment.Member.MemberName)</th>
+                            <th>@Html.DisplayFor(model => installment.InstallmentNo)</th>
+                            <th>@Html.DisplayFor(model => installment.Submit)</th>
+                            <th>@Html.DisplayFor(model => installment.Undo)</th>
+                            <th>@Html.DisplayFor(model => installment.Profit)</th>
+                            <th>@Html.DisplayFor(model => installment.Payment)</th>
+
+                            <th>
+                                <a class="btn btn-sm btn-success" href="@Url.Action("Edit","Installment",new {id=installment.Id })"><i class="fa fa-edit"></i></a>
+
+                            </th>
+
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+        <div class="box-footer">
+            <div class="main-pagination">
+                Page @(Model.InstallmentPageList.PageCount < Model.InstallmentPageList.PageNumber ? 0 : Model.InstallmentPageList.PageNumber) of @Model.InstallmentPageList.PageCount
+                @Html.PagedListPager(Model.InstallmentPageList, Page => Url.Action("Index", "Cost", new RouteValueDictionary() { { "Page", Page }, { "PageSize", Model.PageSize }, { "DateFrom", Model.DateFrom }, { "DateTo", Model.DateTo }, { "MemberId", Model.MemberId } }))
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+<!-- /.box -->

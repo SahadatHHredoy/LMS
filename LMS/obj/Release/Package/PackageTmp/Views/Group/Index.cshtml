@@ -1,0 +1,48 @@
+﻿@model IEnumerable<LMS.Entities.Group>
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">দল সমূহ</h3>
+
+        <div class="box-tools">
+            <a class="btn btn-sm btn-success" href="@Url.Action("Add","Group")"><i class="fa fa-plus"></i></a>
+        </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+        <table class="table table-bordered">
+            <tr>
+                <th style="width: 10px">#</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().GroupName)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().LeaderName)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().MaxGroupMembers)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Status)</th>
+                <th></th>
+
+            </tr>
+            @{
+                int i = 1;
+                foreach (var group in Model)
+                {
+                    <tr>
+                        <th style="width: 10px">@(i++)</th>
+                        <th>@Html.DisplayFor(model => group.GroupName)</th>
+                        <th>@Html.DisplayFor(model => group.LeaderName)</th>
+                        <th>@Html.DisplayFor(model => group.MaxGroupMembers)</th>
+                        <th>
+                            <span class="badge bg-green-active">
+                                @Enum.GetName(typeof(EnumStatus), group.Status)
+                            </span>
+                        </th>
+                        <th>
+                            <a class="btn btn-sm btn-success" href="@Url.Action("Add","Group")"><i class="fa fa-edit"></i></a>
+                            <a class="btn btn-sm btn-danger" href="@Url.Action("Add","Group")"><i class="fa fa-times"></i></a>
+                        </th>
+
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->

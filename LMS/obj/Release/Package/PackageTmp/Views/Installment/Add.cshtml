@@ -1,0 +1,152 @@
+﻿@model LMS.Models.InstallmentModel
+@Styles.Render("~/Content/datePicker")
+@using (Html.BeginForm("Add", "Installment", FormMethod.Post, new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">নতুন কিস্তি</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        @Html.LabelFor(model=>model.GroupId, new { @class = "col-sm-5 control-label" })
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(model=>model.GroupId,new SelectList(Model.GroupList,"Id","GroupName"),"Choose--", new { @class = "form-control input-sm",@onchange="AppendMembers(this)" })
+                            @Html.ValidationMessageFor(model=>model.GroupId)
+                        </div>
+                    </div>
+                </div>  
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        @Html.LabelFor(model=>model.Date, new { @class = "col-sm-5 control-label text-left" })
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model=>model.Date, new { @class = "form-control datePicker input-sm",@Value="" })
+                            @Html.ValidationMessageFor(model=>model.Date)
+                        </div>
+                    </div>
+                </div>  
+                <div class="col-md-12">
+                  <table class="table table-bordered table-condensed">
+                      <tr class="text-center bg-green">
+                         
+                          <td colspan="2">সদস্যের তথ্য</td>
+                          <td colspan="4">সঞ্চয় হিসাব</td>
+                          <td colspan="3">ঋণের হিসাব </td>
+                      </tr>
+                      <tr class="text-center bg-green-active">
+                      
+                          <td>@Html.Label("ছবি")</td>
+                          <td>@Html.LabelFor(model=>model.InstallmentList.FirstOrDefault().MemberId)</td>
+                          <td>@Html.LabelFor(model=>model.InstallmentList.FirstOrDefault().Submit)</td>
+                          <td>@Html.LabelFor(model=>model.InstallmentList.FirstOrDefault().Undo)</td>
+                          <td>@Html.LabelFor(model=>model.InstallmentList.FirstOrDefault().Profit)</td>
+                          <td>@Html.LabelFor(model=>model.InstallmentList.FirstOrDefault().SavingAmount)</td> 
+                          <td>@Html.LabelFor(model=>model.InstallmentList.FirstOrDefault().InstallmentNo)</td>
+                          <td>@Html.LabelFor(model=>model.InstallmentList.FirstOrDefault().Payment)</td>
+                          <td>@Html.LabelFor(model=>model.InstallmentList.FirstOrDefault().LoanDue)</td>
+                      </tr>
+                      <tbody id="installmentTbody">
+                      </tbody>
+                  </table>
+                </div>  
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <a href="@Url.Action("Index","Installment")" class="btn btn-danger">ক্যান্সেল</a>
+            <button type="submit" class="btn btn-info pull-right">সেভ</button>
+        </div>
+        <!-- /.box-footer-->
+    </div>
+}
+<!-- /.box -->
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datePicker")
+    <script>
+
+        $(".datePicker").datepicker({ autoclose: true, format: 'dd-M-yy' });
+
+        function CalculateLoanAndSaving(obj) {
+
+            var submit = isNaN(parseFloat($(obj).closest('tr').find("input[name$='.Submit']").val())) ? 0 : parseFloat($(obj).closest('tr').find("input[name$='.Submit']").val());
+            var undo = isNaN(parseFloat($(obj).closest('tr').find("input[name$='.Undo']").val())) ? 0 : parseFloat($(obj).closest('tr').find("input[name$='.Undo']").val());
+            var profit = isNaN(parseFloat($(obj).closest('tr').find("input[name$='.Profit']").val())) ? 0 : parseFloat($(obj).closest('tr').find("input[name$='.Profit']").val());
+            var payment = isNaN(parseFloat($(obj).closest('tr').find("input[name$='.Payment']").val())) ? 0 : parseFloat($(obj).closest('tr').find("input[name$='.Payment']").val());
+            var saving = isNaN(parseFloat($(obj).closest('tr').find("input[name='Saving']").val())) ? 0 : parseFloat($(obj).closest('tr').find("input[name='Saving']").val());
+            var loan = isNaN(parseFloat($(obj).closest('tr').find("input[name='Loan']").val())) ? 0 : parseFloat($(obj).closest('tr').find("input[name='Loan']").val());
+            if (undo > saving) {
+                alert('উত্তোলন জমার অধিক হতে পারবেনা !');
+                $(obj).closest('tr').find("input[name$='.Undo']").val(0);
+                CalculateLoanAndSaving(obj);
+            }
+            else if (payment > loan) {
+                alert('কিস্তি ঋণের অধিক হতে পারবেনা !');
+                $(obj).closest('tr').find("input[name$='.Payment']").val(0);
+                CalculateLoanAndSaving(obj);
+            }
+            else {
+                var totalSaving = (saving + submit + profit) - undo;
+                $(obj).closest('tr').find("input[name$='.SavingAmount']").val(totalSaving.toFixed(2));
+                var totalLoan = loan-payment;
+                $(obj).closest('tr').find("input[name$='.LoanDue']").val(totalLoan.toFixed(2));
+            }
+        }
+        function AppendMembers(obj)
+        {
+            $("#installmentTbody").empty();
+
+            var id = $(obj).val();
+            if (id != '') {
+                  var paramData = { id: $(obj).val() };
+                  $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetMembers","Group")',
+                    data: JSON.stringify(paramData),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                      success: function (response) {
+                          var i = 0;
+                          $(response).each(function () {
+
+                              $("#installmentTbody").append(
+                                  '<tr>' +
+                                  '<td><img height="50" width="50" src="'+this.Image.replace("~"," ")+'"></td>' +
+                                  '<td>' +
+                                  '<input data-val="true" data-val-number="The field সদস্য must be a number." data-val-required="তথ্য টি পূরণ করতে হবে" id="InstallmentList_'+i+'__MemberId" name="InstallmentList['+i+'].MemberId" type="hidden" value="'+this.Id+'">' +
+                                  '<label for="Name">'+this.Name+'</label>' +
+                                  '</td>' +
+                                  '<td><input class="form-control input-sm" data-val="true" data-val-number="The field জমা must be a number." id="InstallmentList_'+i+'__Submit" name="InstallmentList['+i+'].Submit" type="number" onkeyup="CalculateLoanAndSaving(this)" value=""></td>' +
+                                  '<td><input class="form-control input-sm" data-val="true" data-val-number="The field উত্তোলন must be a number." id="InstallmentList_'+i+'__Undo" name="InstallmentList['+i+'].Undo" type="number" onkeyup="CalculateLoanAndSaving(this)" value=""></td>' +
+                                  '<td><input class="form-control input-sm" data-val="true" data-val-number="The field লাভ must be a number." id="InstallmentList_' + i + '__Profit" name="InstallmentList[' + i + '].Profit" type="number" onkeyup="CalculateLoanAndSaving(this)" value=""></td>' +
+                                  '<td><input id="Saving" name="Saving" type="hidden" value="' + this.Saving + '"><input class="form-control input-sm" data-val="true" data-val-number="The field জমা স্থিতি must be a number." id="InstallmentList_' + i + '__SavingAmount" name="InstallmentList[' + i + '].SavingAmount" readonly="readonly" type="number" value="' + this.Saving + '"></td>' +
+                                  '<td><input class="form-control input-sm" data-val="true" data-val-number="The field কিস্তি নং must be a number." id="InstallmentList_' + i + '__InstallmentNo" name="InstallmentList[' + i + '].InstallmentNo" type="number" readonly="readonly" value="' + (this.Loan == 0 ? "" : this.InstallNo) + '"></td>' +
+                                  '<td><input class="form-control input-sm" data-val="true" data-val-number="The field আদায় must be a number." id="InstallmentList_'+i+'__Payment" name="InstallmentList['+i+'].Payment" '+(this.Loan==0? "readonly='readonly'": "")+' onkeyup="CalculateLoanAndSaving(this)" type="number" value=""></td>' +
+                                  '<td><input id="Loan" name="Loan" type="hidden" value="'+this.Loan+'"><input class="form-control input-sm" data-val="true" data-val-number="The field ঋণ স্থিতি must be a number." id="InstallmentList_'+i+'__LoanDue" name="InstallmentList['+i+'].LoanDue" readonly="readonly" type="number" value="'+this.Loan+'"></td>' +
+                                  '</tr>');
+                              i++;
+                          }); 
+                      
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(textStatus + "! please try again", '<i class="fa fa-exclamation-circle" aria-hidden="true"> Alert</i>');
+                    }
+                });
+            }
+        }
+    </script>
+}
+
+
+

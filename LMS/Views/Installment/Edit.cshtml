@@ -1,0 +1,85 @@
+﻿@model LMS.Entities.Installment
+@{
+    ViewBag.Title = "Add";
+}
+
+@using (Html.BeginForm("Edit", "Installment", FormMethod.Post, new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">কিস্তি</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("সদস্যের ছবি ", new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            <img id="userImg" src="@Url.Content(Model.Member.Image)" width="200" height="100" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.MemberId, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.DisplayFor(model => model.Member.MemberName, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-bordered table-condensed">
+
+                        <tr class="text-center bg-green-active">
+
+                            <td>@Html.LabelFor(model => model.Submit)</td>
+                            <td>@Html.LabelFor(model => model.Undo)</td>
+                            <td>@Html.LabelFor(model => model.Profit)</td>
+                            <td>@Html.LabelFor(model => model.SavingAmount)</td>
+                            <td>@Html.LabelFor(model => model.InstallmentNo)</td>
+                            <td>@Html.LabelFor(model => model.Payment)</td>
+                            <td>@Html.LabelFor(model => model.LoanDue)</td>
+                        </tr>
+                        <tr>
+
+                            <td>@Html.TextBoxFor(model => model.Submit,new {@class="form-control" })</td>
+                            <td>@Html.TextBoxFor(model => model.Undo,new {@class="form-control" })</td>
+                            <td>@Html.TextBoxFor(model => model.Profit,new {@class="form-control" })</td>
+                            <td>@Html.TextBoxFor(model => model.SavingAmount,new {@class="form-control", @readonly="readonly" })</td>
+                            <td>@Html.TextBoxFor(model => model.InstallmentNo,new {@class="form-control", @readonly="readonly" } )</td>
+                            <td>@Html.TextBoxFor(model => model.Payment,new {@class="form-control" })</td>
+                            <td>@Html.TextBoxFor(model => model.LoanDue, new { @class = "form-control", @readonly="readonly" })</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <a href="@Url.Action("Index","Group")" class="btn btn-danger">ক্যান্সেল</a>
+            <button type="submit" class="btn btn-info pull-right">সেভ</button>
+        </div>
+        <!-- /.box-footer-->
+    </div>
+}
+<!-- /.box -->
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+
+
+    </script>
+}
+
+

@@ -52,6 +52,12 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -127,8 +133,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="Controllers\CostController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InstallmentController.cs" />
     <Compile Include="Controllers\LoanController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Entities\Cost.cs" />
@@ -146,10 +154,17 @@
     <Compile Include="Migrations\201907080613588_migForIntial.Designer.cs">
       <DependentUpon>201907080613588_migForIntial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907110656329_migForCost.cs" />
+    <Compile Include="Migrations\201907110656329_migForCost.Designer.cs">
+      <DependentUpon>201907110656329_migForCost.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\GroupModel.cs" />
+    <Compile Include="Models\HomeModel.cs" />
+    <Compile Include="Models\InstallmentModel.cs" />
     <Compile Include="Models\LoanModel.cs" />
     <Compile Include="Models\MemberModel.cs" />
+    <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +174,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\ionicons.min.css" />
     <Content Include="Content\jquery-jvectormap.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\_all-skins.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -223,10 +239,23 @@
     <Content Include="Views\Member\Add.cshtml" />
     <Content Include="Views\Loan\Index.cshtml" />
     <Content Include="Views\Loan\Add.cshtml" />
+    <Content Include="Views\Cost\Index.cshtml" />
+    <Content Include="Views\Cost\Add.cshtml" />
+    <Content Include="Views\Installment\Index.cshtml" />
+    <Content Include="Views\Installment\Add.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Views\Group\Edit.cshtml" />
+    <Content Include="Views\Member\Edit.cshtml" />
+    <Content Include="Views\Loan\Edit.cshtml" />
+    <Content Include="Views\Installment\Edit.cshtml" />
+    <Content Include="Views\Cost\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201907080613588_migForIntial.resx">
       <DependentUpon>201907080613588_migForIntial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907110656329_migForCost.resx">
+      <DependentUpon>201907110656329_migForCost.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

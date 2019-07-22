@@ -1,6 +1,6 @@
 ﻿@model LMS.Models.LoanModel
 
-@Styles.Render("~/Content/datePicker")
+
 @using (Html.BeginForm("Add", "Loan", FormMethod.Post, new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -117,8 +117,9 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/datePicker")
+
     <script>
+    
         function OnMemberChange(obj) {
 
             if ($(obj).val() != '') {
@@ -146,10 +147,10 @@
         function AmountCalculation() {
             var loanAmount = isNaN(parseFloat($("#LoanAmount").val())) ? 0 : parseFloat($("#LoanAmount").val());
             var profitAmount = isNaN(parseFloat($("#ProfitAmount").val())) ? 0 : parseFloat($("#ProfitAmount").val());
-            var serviceAmount = isNaN(parseFloat($("#ServiceAmount").val())) ? 0 : parseFloat($("#ServiceAmount").val());
-            $("#PayableAmount").val((loanAmount + profitAmount + serviceAmount).toFixed(0));
+          
+            $("#PayableAmount").val((loanAmount + profitAmount).toFixed(0));
         }
-    $(".datePicker").datepicker({ autoclose: true,format:'dd-M-yy' });
+
 
     </script>
 }

@@ -56,6 +56,9 @@ namespace LMS
                           "~/Scripts/bootstrap-datepicker.min.js"));
             bundles.Add(new StyleBundle("~/Content/datepicker").Include(
                       "~/Content/bootstrap-datepicker.min.css"));
+
+            bundles.Add(new StyleBundle("~/Content/PagedList").Include(
+                      "~/Content/PagedList.css"));
         }
     }
 }

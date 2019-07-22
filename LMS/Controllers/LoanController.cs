@@ -1,5 +1,6 @@
 ﻿using LMS.Entities;
 using LMS.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,9 +18,12 @@ namespace LMS.Controllers
         {
             _context = new LMSDbContext();
         }
-        public ActionResult Index()
+        public ActionResult Index(LoanViewModel model)
         {
-            return View(_context.Loans.ToList());
+            DateTime dtFrom = Convert.ToDateTime(model.DateFrom);
+            DateTime dtTo = Convert.ToDateTime(model.DateTo);
+            model.LoanPageList = _context.Loans.Where(s => ((model.DateFrom == null) || s.Date >= dtFrom) && ((model.DateTo == null) || s.Date <= dtTo)&& ((model.MemberId == null) || s.MemberId == model.MemberId)).OrderBy(s => s.Date).ToPagedList(model.Page, model.PageSize);
+            return View(model);
         }
         public ActionResult Add()
         {
@@ -63,6 +67,74 @@ namespace LMS.Controllers
                     _context.Entry(orgSetting).State = EntityState.Modified;
                     _context.SaveChanges();
                 }
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+        public ActionResult Edit(int id)
+        {
+            var loan = _context.Loans.Find(id);
+            var loanModel = new LoanModel()
+            {
+                Date = loan.Date,
+                MemberId = loan.MemberId,
+                ProjectName = loan.ProjectName,
+                TotalInstallment = loan.TotalInstallment,
+                InstallmentType = loan.InstallmentType,
+                FirstInstallment = loan.FirstInstallment,
+                LoanAmount = loan.LoanAmount,
+                ProfitAmount = loan.ProfitAmount,
+                ServiceAmount = loan.ServiceAmount,
+                PayableAmount = loan.PayableAmount,
+                Member = loan.Member,
+                MemberList = _context.Members.Where(s => s.Status == (byte)EnumStatus.Active).ToList()
+            };
+            return View(loanModel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(LoanModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var loan = _context.Loans.Find(model.Id);
+                if (loan != null)
+                {
+                    var member = _context.Members.Find(model.MemberId);
+                    if (member != null)
+                    {
+                        member.DueLoan -= loan.PayableAmount;
+                        member.DueLoan += model.PayableAmount;
+                        _context.Entry(member).State = EntityState.Modified;
+                        _context.SaveChanges();
+                    }
+                    var orgSetting = _context.OrganizationSettings.FirstOrDefault();
+                    if (orgSetting != null)
+                    {
+                        orgSetting.TotalTransaction -= loan.PayableAmount;
+                        orgSetting.TotalLoan -= loan.PayableAmount;
+                        orgSetting.TotalProfit -= (loan.ProfitAmount + loan.ServiceAmount);
+                        orgSetting.TotalTransaction += model.PayableAmount;
+                        orgSetting.TotalLoan += model.PayableAmount;
+                        orgSetting.TotalProfit += (model.ProfitAmount + model.ServiceAmount);
+                        _context.Entry(orgSetting).State = EntityState.Modified;
+                        _context.SaveChanges();
+                    }
+
+                    loan.Date = model.Date;
+                    loan.MemberId = model.MemberId;
+                    loan.ProjectName = model.ProjectName;
+                    loan.TotalInstallment = model.TotalInstallment;
+                    loan.InstallmentType = model.InstallmentType;
+                    loan.FirstInstallment = model.FirstInstallment;
+                    loan.LoanAmount = model.LoanAmount;
+                    loan.ProfitAmount = model.ProfitAmount;
+                    loan.ServiceAmount = model.ServiceAmount;
+                    loan.PayableAmount = model.PayableAmount;
+                    _context.Entry(loan).State = EntityState.Modified;
+                    _context.SaveChanges();
+                }
+             
                 return RedirectToAction("Index");
             }
             return View(model);

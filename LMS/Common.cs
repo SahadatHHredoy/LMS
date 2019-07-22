@@ -5,8 +5,12 @@ using System.Web;
 
 namespace LMS
 {
-    public class Common
+    public static  class Common
     {
+        public static string DateFormat(this DateTime date)
+        {
+            return string.Format("{0:dd-MMM-yyyy}", date);
+        }
     }
 
     public enum EnumStatus : byte
@@ -14,4 +18,5 @@ namespace LMS
         Active =1,
         Deactive =0,
     }
+   
 }

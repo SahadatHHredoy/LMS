@@ -1,0 +1,80 @@
+﻿@using PagedList.Mvc
+@model LMS.Models.CostViewModel
+@Styles.Render("~/Content/PagedList")
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">খরচ  সমূহ</h3>
+
+            <div class="box-tools">
+                <a class="btn btn-sm btn-success" href="@Url.Action("Add","Cost")"><i class="fa fa-plus"></i></a>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+            <div class="form-horizontal">
+                @using (Html.BeginForm("Index", "Cost", FormMethod.Post, new { @class = "", @id = "taxStampDemandSearchForm" }))
+                {
+                    <div class="col-md-12">
+                        <div class="form-group col-md-3">
+                            @Html.Label("তারিখ  :", new { @class = "col-md-5 control-label" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(model => model.DateFrom, new { @class = "form-control input-sm datePicker", @autocomplete = "off" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            @Html.Label("-", new { @class = "col-md-1 control-label" })
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(model => model.DateTo, new { @class = "form-control input-sm datePicker", @autocomplete = "off" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md-4">
+                            <button type="submit" class="btn btn-sm btn-success">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                            <a class="btn btn-sm btn-info" href='@Url.Action("Index","Cost")'>
+                                <span class="fa fa-refresh"></span>
+                            </a>
+
+                        </div>
+
+                    </div>
+                }
+             
+            </div>
+            <table class="table table-bordered">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.CostPageList.FirstOrDefault().Date)</th>
+                    <th>@Html.DisplayNameFor(model => model.CostPageList.FirstOrDefault().CostDetail)</th>
+                    <th>@Html.DisplayNameFor(model => model.CostPageList.FirstOrDefault().Amount)</th>
+                    <th></th>
+                </tr>
+
+                @foreach (var loan in Model.CostPageList)
+                {
+                    <tr>
+
+                        <th>@loan.Date.DateFormat()</th>
+                        <th>@Html.DisplayFor(model => loan.CostDetail)</th>
+                        <th>@Html.DisplayFor(model => loan.Amount)</th>
+
+                        <th>
+                            <a class="btn btn-sm btn-success" href="@Url.Action("Edit","Cost",new {id=loan.Id })"><i class="fa fa-edit"></i></a>
+
+                        </th>
+
+                    </tr>
+                }
+            </table>
+
+        </div>
+        <div class="box-footer">
+            <div class="main-pagination">
+                Page @(Model.CostPageList.PageCount < Model.CostPageList.PageNumber ? 0 : Model.CostPageList.PageNumber) of @Model.CostPageList.PageCount
+                @Html.PagedListPager(Model.CostPageList, Page => Url.Action("Index", "Cost", new RouteValueDictionary() { { "Page", Page }, { "PageSize", Model.PageSize }, { "DateFrom", Model.DateFrom }, { "DateTo", Model.DateTo } }))
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+<!-- /.box -->

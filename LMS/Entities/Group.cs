@@ -18,5 +18,6 @@ namespace LMS.Entities
         [Display(Name ="সর্বোচ্চ সদস্য সংখ্যা")]
         [Required(ErrorMessage = "সর্বোচ্চ সদস্য সংখ্যা প্রদান করতে হবে !")]
         public int MaxGroupMembers { get; set; }
+        public virtual ICollection<Member> Members { get; set; }
     }
 }

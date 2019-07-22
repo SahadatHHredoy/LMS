@@ -19,5 +19,10 @@ namespace LMS.Models
             _context = new LMSDbContext();
             GroupList = _context.Groups.Where(s=>s.Status==(byte)EnumStatus.Active).ToList();
         }
+
+        internal List<Member> GetAllMember()
+        {
+            return _context.Members.ToList();
+        }
     }
 }

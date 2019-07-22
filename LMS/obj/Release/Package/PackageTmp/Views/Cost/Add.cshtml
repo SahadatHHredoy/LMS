@@ -1,0 +1,71 @@
+﻿@model LMS.Entities.Cost
+@{
+    ViewBag.Title = "Add";
+}
+@Styles.Render("~/Content/datePicker")
+@using (Html.BeginForm("Add", "Cost", FormMethod.Post, new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">নতুন দল</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.Date, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.Date, new { @class = "form-control datePicker" })
+                            @Html.ValidationMessageFor(model => model.Date)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.CostDetail, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.CostDetail, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CostDetail)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.Amount, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.Amount, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Amount)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <a href="@Url.Action("Index","Group")" class="btn btn-danger">ক্যান্সেল</a>
+            <button type="submit" class="btn btn-info pull-right">সেভ</button>
+        </div>
+        <!-- /.box-footer-->
+    </div>
+}
+<!-- /.box -->
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datePicker")
+    <script>
+         $(".datePicker").datepicker({ autoclose: true,format:'dd-M-yy' });
+
+    </script>
+}
+
+

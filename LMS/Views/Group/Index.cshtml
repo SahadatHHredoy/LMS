@@ -34,8 +34,16 @@
                             </span>
                         </th>
                         <th>
-                            <a class="btn btn-sm btn-success" href="@Url.Action("Add","Group")"><i class="fa fa-edit"></i></a>
-                            <a class="btn btn-sm btn-danger" href="@Url.Action("Add","Group")"><i class="fa fa-times"></i></a>
+                            @if (group.Status == (byte)EnumStatus.Active)
+                            {
+                                <a class="btn btn-sm btn-success" href="@Url.Action("Edit","Group",new {id=group.Id })"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-sm btn-danger" href="@Url.Action("Deactive","Group",new {id=group.Id })" onclick="confirm('ডিএক্টিব  করতে চান?')? true : event.preventDefault()"><i class="fa fa-times"></i></a>
+
+                            }
+                            else
+                            {
+                                <a class="btn btn-sm btn-danger" href="@Url.Action("Active","Group",new {id=group.Id })" onclick="confirm('এক্টিব করতে চান?')? true : event.preventDefault()"><i class="fa fa-recycle"></i></a>
+                            }
                         </th>
 
                     </tr>

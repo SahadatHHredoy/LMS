@@ -1,0 +1,184 @@
+﻿@model LMS.Models.MemberModel
+@Styles.Render("~/Content/datePicker")
+@using (Html.BeginForm("Edit", "Member", FormMethod.Post, new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">সদস্য</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        @Html.Label("ছবি", new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @if (Model.Image != null)
+                            {
+                                <div>
+                                    <img height="100" width="150" src="@Url.Content(Model.Image)">
+                                    <br />
+                                    <span onclick="$(this).closest('div').addClass('hidden'); $('#imageUpload').removeClass('hidden') " class="btn btn-sm btn-danger">Delete</span>
+                                </div>
+                                <div class="hidden" id="imageUpload">
+                                    @Html.TextBoxFor(model => model.File, new { @type = "file", @accept = "image/*", @required = "required" })
+                                    @Html.ValidationMessageFor(model => model.File)
+                                </div>
+
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(model => model.File, new { @type = "file", @accept = "image/*", @required = "required" })
+                                @Html.ValidationMessageFor(model => model.File)
+                            }
+
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.MemberName, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.MemberName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MemberName)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.FatherName, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.FatherName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.FatherName)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.MothersName, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.MothersName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MothersName)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.PresentAddress, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(model => model.PresentAddress, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PresentAddress)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.ParmanentAddress, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(model => model.ParmanentAddress, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ParmanentAddress)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.Religion, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.Religion, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Religion)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.Nationlity, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.Nationlity, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Nationlity)
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.GroupId, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.GroupId, new SelectList(Model.GroupList, "Id", "GroupName"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.GroupId)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.DateOfBirth, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "datePicker form-control", @Value = Model.DateOfBirth.DateFormat() })
+                            @Html.ValidationMessageFor(model => model.DateOfBirth)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.MobileNo, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.MobileNo, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MobileNo)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.NID, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.NID, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NID)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.BloodGroup, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.BloodGroup, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.BloodGroup)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.PartnerName, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.PartnerName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PartnerName)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.EduQualification, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.EduQualification, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.EduQualification)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.Profession, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(model => model.Profession, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Profession)
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.OfficeAddress, new { @class = "col-sm-4 control-label text-left" })
+                        <div class="col-sm-8">
+                            @Html.TextAreaFor(model => model.OfficeAddress, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.OfficeAddress)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <a href="@Url.Action("Index","Group")" class="btn btn-danger">ক্যান্সেল</a>
+            <button type="submit" class="btn btn-info pull-right">সেভ</button>
+        </div>
+        <!-- /.box-footer-->
+    </div>
+}
+<!-- /.box -->
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datePicker")
+    <script>
+
+        $(".datePicker").datepicker({ autoclose: true, format: 'dd-M-yy' });
+    </script>
+}
+
+
+

@@ -18,6 +18,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     @Styles.Render("~/Content/allskins")
+    @Styles.Render("~/Content/datePicker")
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
@@ -26,16 +27,14 @@
     <!-- Site wrapper -->
     <div class="wrapper">
 
-      @Html.Partial("_headerPartial")
-      @Html.Partial("_sidebarPartial")
-    
+        @Html.Partial("_headerPartial")
+        @Html.Partial("_sidebarPartial")
+
 
         <!-- =============================================== -->
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            
-
             <!-- Main content -->
             <section class="content">
                 @RenderBody()
@@ -69,7 +68,13 @@
     @Scripts.Render("~/bundles/adminlte")
     <!-- AdminLTE for demo purposes -->
     @Scripts.Render("~/bundles/demo")
+    @Scripts.Render("~/bundles/datePicker")
     @RenderSection("scripts", required: false)
+
+        <script>
+
+        $(".datePicker").datepicker({ autoclose: true,format:'dd-M-yy' });
+        </script>
 
 </body>
 </html>

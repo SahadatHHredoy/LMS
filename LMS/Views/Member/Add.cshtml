@@ -1,5 +1,5 @@
 ﻿@model LMS.Models.MemberModel
-@Styles.Render("~/Content/datePicker")
+
 @using (Html.BeginForm("Add", "Member", FormMethod.Post, new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -20,7 +20,7 @@
                     <div class="form-group ">
                         @Html.Label("ছবি", new { @class = "col-sm-4 control-label text-left" })
                         <div class="col-sm-8">
-                            @Html.TextBoxFor(model => model.File, new { @type = "file", @accept = "image/*" })
+                            @Html.TextBoxFor(model => model.File, new { @type = "file", @accept = "image/*",@required="required" })
                             @Html.ValidationMessageFor(model => model.File)
                         </div>
                     </div>
@@ -156,11 +156,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/datePicker")
-    <script>
-
-        $(".datePicker").datepicker({ autoclose: true,format:'dd-M-yy' });
-    </script>
+  
 }
 
 

@@ -77,5 +77,101 @@ namespace LMS.Controllers
             var member = _context.Members.Find(id);
             return Json(member.Image);
         }
+
+        public ActionResult Edit(int id)
+        {
+            var member = _context.Members.Find(id);
+            var memberModel = new MemberModel()
+            {
+                Id = member.Id,
+                MemberName = member.MemberName,
+                GroupId = member.GroupId,
+                Image = member.Image,
+                FatherName = member.FatherName,
+                MothersName = member.MothersName,
+                PresentAddress = member.PresentAddress,
+                ParmanentAddress = member.ParmanentAddress,
+                DateOfBirth = member.DateOfBirth,
+                MobileNo = member.MobileNo,
+                NID = member.NID,
+                Religion = member.Religion,
+                BloodGroup = member.BloodGroup,
+                Nationlity = member.Nationlity,
+                Profession = member.Profession,
+                OfficeAddress = member.OfficeAddress,
+                PartnerName = member.PartnerName,
+                EduQualification = member.EduQualification,
+            } ;
+            return View(memberModel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(MemberModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string ImagePath = "";
+                if (model.File != null)
+                {
+                    var fileNameWithoutExt = Path.GetFileNameWithoutExtension(model.File.FileName);
+                    var fileExtension = Path.GetExtension(model.File.FileName);
+                    var finalFileName = string.Format("{0:yyMMddhhmmss}", DateTime.Now) + fileExtension;
+                    string savePath = Path.Combine(Server.MapPath("~/Uploads/"), finalFileName);
+                    model.File.SaveAs(savePath);
+                    ImagePath = "~/Uploads/" + finalFileName;
+
+                }
+                var member = _context.Members.Find(model.Id);
+                if (member != null)
+                {
+                    member.MemberName = model.MemberName;
+                    member.GroupId = model.GroupId;
+                    if (ImagePath != "")
+                    {
+                        member.Image = ImagePath;
+                    }
+                    member.FatherName = model.FatherName;
+                    member.MothersName = model.MothersName;
+                    member.PresentAddress = model.PresentAddress;
+                    member.ParmanentAddress = model.ParmanentAddress;
+                    member.DateOfBirth = model.DateOfBirth;
+                    member.MobileNo = model.MobileNo;
+                    member.NID = model.NID;
+                    member.Religion = model.Religion;
+                    member.BloodGroup = model.BloodGroup;
+                    member.Nationlity = model.Nationlity;
+                    member.Profession = model.Profession;
+                    member.OfficeAddress = model.OfficeAddress;
+                    member.PartnerName = model.PartnerName;
+                    member.EduQualification = model.EduQualification;
+                    _context.Entry(member).State = System.Data.Entity.EntityState.Modified;
+                    _context.SaveChanges();
+                }
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+        public ActionResult Deactive(int id)
+        {
+            var memeber = _context.Members.Find(id);
+            if (memeber != null)
+            {
+                memeber.Status = (byte)EnumStatus.Deactive;
+                _context.Entry(memeber).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult Active(int id)
+        {
+            var memeber = _context.Members.Find(id);
+            if (memeber != null)
+            {
+                memeber.Status = (byte)EnumStatus.Active;
+                _context.Entry(memeber).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
