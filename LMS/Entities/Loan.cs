@@ -17,17 +17,17 @@ namespace LMS.Entities
         public virtual Member Member { get; set; }
         [Display(Name = "ঋণের পরিমাণ")]
         [Required(ErrorMessage = "এই তথ্যটি পূরণ করতে হবে !")]
-        public double LoanAmount { get; set; }
-        [Required(ErrorMessage = "এই তথ্যটি পূরণ করতে হবে !")]
+        public double? LoanAmount { get; set; }
+        //[Required(ErrorMessage = "এই তথ্যটি পূরণ করতে হবে !")]
         [Display(Name = "লাভ্যংশ ")]
-        public double ProfitAmount { get; set; }
+        public double? ProfitAmount { get; set; }
         [Display(Name = "সার্ভিস খরচ")]
-        [Required(ErrorMessage = "এই তথ্যটি পূরণ করতে হবে !")]
-        public double ServiceAmount { get; set; }
+    
+        public double? ServiceAmount { get; set; }
         [Display(Name = "পরিশোধ যোগ্য")]
-        public double PayableAmount { get; set; }
+        public double? PayableAmount { get; set; }
         [Display(Name = "কিস্তি সংখ্যা")]
-        [Required(ErrorMessage = "এই তথ্যটি পূরণ করতে হবে !")]
+        //[Required(ErrorMessage = "এই তথ্যটি পূরণ করতে হবে !")]
         public int TotalInstallment { get; set; }
         [Display(Name = "প্রকল্পের নাম")]
         public string ProjectName{get;set;}

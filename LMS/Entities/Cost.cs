@@ -14,8 +14,8 @@ namespace LMS.Entities
         [Required(ErrorMessage = "তথ্য টি পূরণ করতে হবে")]
         public string CostDetail { get; set; }
         [Display(Name = "টাকার পরিমাণ")]
-        [Required(ErrorMessage = "তথ্য টি পূরণ করতে হবে")]
-        public double Amount { get; set; }
+        //[Required(ErrorMessage = "তথ্য টি পূরণ করতে হবে")]
+        public double? Amount { get; set; }
         [Display(Name = "তারিখ")]
         [Required(ErrorMessage = "তথ্য টি পূরণ করতে হবে")]
         public DateTime Date { get; set; }

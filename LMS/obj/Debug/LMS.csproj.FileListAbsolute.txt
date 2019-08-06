@@ -167,3 +167,15 @@ D:\Projects\LMS\LMS\bin\PagedList.dll
 D:\Projects\LMS\LMS\bin\PagedList.Mvc.dll
 D:\Projects\LMS\LMS\bin\PagedList.xml
 D:\Projects\LMS\LMS\bin\PagedList.Mvc.xml
+D:\Projects\LMS\LMS\obj\Debug\LMS.Migrations.migFor23.resources
+D:\Projects\LMS\LMS\obj\Debug\LMS.Migrations.migForUndo.resources
+D:\Projects\LMS\LMS\obj\Debug\LMS.Migrations.migForUndo2.resources
+D:\Projects\LMS\LMS\obj\Debug\LMS.Migrations.migForUndo3.resources
+D:\Projects\LMS\LMS\obj\Debug\LMS.Migrations.migForUndo4.resources
+D:\Projects\LMS\LMS\obj\Debug\LMS.Migrations.migForUndo5.resources
+D:\Projects\LMS\LMS\obj\Debug\LMS.Migrations.migForUndo6.resources
+D:\Projects\LMS\LMS\obj\Debug\LMS.Migrations.migForUndo61.resources
+D:\Projects\LMS\LMS\obj\Debug\LMS.Migrations.migForUndo62.resources
+D:\Projects\LMS\LMS\obj\Debug\LMS.Migrations.migForUndo41.resources
+D:\Projects\LMS\LMS\obj\Debug\LMS.Migrations.migForUndo00.resources
+D:\Projects\LMS\LMS\obj\Debug\LMS.Migrations.migForUndo09.resources

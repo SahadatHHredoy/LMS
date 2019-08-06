@@ -72,8 +72,8 @@
     @RenderSection("scripts", required: false)
 
         <script>
-
-        $(".datePicker").datepicker({ autoclose: true,format:'dd-M-yy' });
+             $(".datePicker").attr('autocomplete','off')
+            $(".datePicker").datepicker({ autoclose: true ,format:'dd-mm-yyyy'});
         </script>
 
 </body>

@@ -58,11 +58,9 @@ namespace LMS.Entities
         public string PartnerName { get; set; }
         [Display(Name = "শিক্ষাগত যোগ্যতা")]
         public string EduQualification { get; set; }
-        [Display(Name = "ঋণের স্থিতি ")]
-        public double DueLoan { get; set; }
-        [Display(Name = "জমা স্থিতি")]
-        public double SavingAmount { get; set; }
+     
 
         public virtual ICollection<Installment> Installments { get; set; }
+        public virtual ICollection<Loan> Loans { get; set; }
     }
 }

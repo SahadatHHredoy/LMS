@@ -40,16 +40,6 @@ namespace LMS.Controllers
                 
                 _context.Costs.Add(cost);
                 _context.SaveChanges();
-                var orgSetting = _context.OrganizationSettings.FirstOrDefault();
-                if (orgSetting != null)
-                {
-                    orgSetting.TotalTransaction += cost.Amount;
-                    orgSetting.TotalCost += cost.Amount;
-                    orgSetting.TotalProfit -= orgSetting.TotalCost;
-                    _context.Entry(orgSetting).State = EntityState.Modified;
-                    _context.SaveChanges();
-                    
-                }
                 return RedirectToAction("Index");
             }
             return View(cost);
@@ -67,16 +57,6 @@ namespace LMS.Controllers
 
                 _context.Costs.Add(cost);
                 _context.SaveChanges();
-                var orgSetting = _context.OrganizationSettings.FirstOrDefault();
-                if (orgSetting != null)
-                {
-                    orgSetting.TotalTransaction += cost.Amount;
-                    orgSetting.TotalCost += cost.Amount;
-                    orgSetting.TotalProfit -= orgSetting.TotalCost;
-                    _context.Entry(orgSetting).State = EntityState.Modified;
-                    _context.SaveChanges();
-
-                }
                 return RedirectToAction("Index");
             }
             return View(cost);

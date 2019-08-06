@@ -40,16 +40,16 @@ namespace LMS.Controllers
         public JsonResult GetMembers(int id)
         {
             var group = _context.Groups.Find(id);
-            return Json(group.Members.Where(s => s.Status == (byte)EnumStatus.Active).Select(s => new
-            {
-                Id = s.Id,
-                Name = s.MemberName,
-                Image = s.Image,
-                Loan = s.DueLoan,
-                Saving = s.SavingAmount,
-                InstallNo = s.Installments.Count(p=>p.Payment.HasValue)+1
-
-            }));
+            //return Json(group.Members.Where(s => s.Status == (byte)EnumStatus.Active).Select(s => new
+            //{
+            //    Id = s.Id,
+            //    Name = s.MemberName,
+            //    Image = s.Image,
+            //    Loan =s.Loans.Sum(o => o.PayableAmount)-s.Installments.Sum(o=>o.Payment)??0,
+            //    Saving = s.Installments.Sum(o => (o.Payment+o.Profit)-o.Undo),
+            //    InstallNo = s.Installments.Count(p=>p.Payment.HasValue)+1
+            //}));
+            return Json(true);
         }
 
         public ActionResult Edit(int id)

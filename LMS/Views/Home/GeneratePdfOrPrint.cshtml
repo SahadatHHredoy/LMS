@@ -1,0 +1,134 @@
+﻿@model LMS.Models.HomeModel
+@{
+    ViewBag.Title = "Home Page";
+    Layout = null;
+}
+<!-- Bootstrap 3.3.7 -->
+@Styles.Render("~/Content/bootstrap")
+<!-- Font Awesome -->
+@Styles.Render("~/Content/font-awesome")
+<!-- Ionicons -->
+@Styles.Render("~/Content/ionicons")
+<!-- Theme style -->
+@Styles.Render("~/Content/adminLTE")
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+     folder instead of downloading all of them to reduce the load. -->
+@Styles.Render("~/Content/allskins")
+@Styles.Render("~/Content/datePicker")
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+<!-- Default box -->
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">মূল পাতা </h3>
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <tr>
+                        <td colspan="6" class="alert-success"></td>
+                    </tr>
+                    <tr>
+                        <td>সঞ্চয় আদায় =</td>
+                        <td>@Html.DisplayFor(model => model.SonchoiAdai)</td>
+                        <td>সঞ্চয় ফেরত =</td>
+                        <td>@Html.DisplayFor(model => model.SonchoiPirot)</td>
+                        <td>জের টাকা =</td>
+                        <td>@Html.DisplayFor(model => model.JerAmount)</td>
+                    </tr>
+                    <tr>
+                        <td>ঋণ আদায় =</td>
+                        <td>@Html.DisplayFor(model => model.RinAdhai)</td>
+                        <td>ঋণ প্রদান =</td>
+                        <td>@Html.DisplayFor(model => model.RinProdan)</td>
+                        <td>সাকুল্য আদায়=</td>
+                        <td>@Html.DisplayFor(model => model.SakolloPay)</td>
+                    </tr>
+                    <tr>
+                        <td>অন্যান্য আদায় =</td>
+                        <td>@Html.DisplayFor(model => model.OnnannoAdhai)</td>
+                        <td>স্থায়ী আমানত ফেরত =</td>
+                        <td>@Html.DisplayFor(model => model.ThayiAmanotPirot)</td>
+                        <td>মোট =</td>
+                        <td>@Html.DisplayFor(model => model.Total)</td>
+                    </tr>
+                    <tr>
+                        <td>সাকুল্য আদায় =</td>
+                        <td>@Html.DisplayFor(model => model.SakolloAdhai)</td>
+                        <td>অস্থায়ী আমানত ফেরত =</td>
+                        <td>@Html.DisplayFor(model => model.OsthayiAmanotPirot)</td>
+                        <td>খরচ =</td>
+                        <td>@Html.DisplayFor(model => model.Cost)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>অন্যান্য খরচ =</td>
+                        <td>@Html.DisplayFor(model => model.OtherCost)</td>
+                        <td>বর্তমান নগদ স্থিতি =</td>
+                        <td>@Html.DisplayFor(model => model.Avaiable)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>সাকুল্যে খরচ =</td>
+                        <td>@Html.DisplayFor(model => model.TotalCost)</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <table class="table">
+                    <tr>
+                        <td colspan="8" class="alert-info"></td>
+                    </tr>
+                    <tr>
+                        <td>বর্তমান সঞ্চয় স্থিতি =</td>
+                        <td>@Html.DisplayFor(model => model.AvaiableSubmit)</td>
+                        <td>ঋণ স্থিতি =</td>
+                        <td>@Html.DisplayFor(model => model.AvaiableLoan)</td>
+                        <td>বর্তমান নগদ স্থিতি =</td>
+                        <td>@Html.DisplayFor(model => model.Avaiable)</td>
+                        <td>সাকুল্যে =</td>
+                        <td>@Html.DisplayFor(model => model.Sakollo)</td>
+                    </tr>
+                </table>
+                <table class="table">
+                    <tr>
+                        <td colspan="10" class="alert-danger"></td>
+                    </tr>
+                    <tr>
+                        <td>স্থায়ী আমানত = </td>
+                        <td>@Html.DisplayFor(model => model.PerDeposit)</td>
+                        <td>অস্থায়ী আমানত =</td>
+                        <td>@Html.DisplayFor(model => model.TempDeposit)</td>
+                        <td>সঞ্চয় স্থিতি  =</td>
+                        <td>@Html.DisplayFor(model => model.AvaiableSubmit)</td>
+                        <td>লাভ   =</td>
+                        <td>@Html.DisplayFor(model => model.Profit)</td>
+                        <td>টোটাল   =</td>
+                        <td>@(Model.PerDeposit + Model.TempDeposit + Model.AvaiableSubmit + Model.Profit)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+
+</div>
+@Scripts.Render("~/bundles/jquery")
+<!-- Bootstrap 3.3.7 -->
+@Scripts.Render("~/bundles/bootstrap")
+<!-- SlimScroll -->
+@Scripts.Render("~/bundles/slimscroll")
+<!-- FastClick -->
+@Scripts.Render("~/bundles/fastclick")
+<!-- AdminLTE App -->
+@Scripts.Render("~/bundles/adminlte")
+<!-- AdminLTE for demo purposes -->
+@Scripts.Render("~/bundles/demo")
+@Scripts.Render("~/bundles/datePicker")
+<!-- /.box-footer-->

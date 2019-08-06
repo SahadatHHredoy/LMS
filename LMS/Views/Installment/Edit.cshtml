@@ -7,7 +7,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-
+    
     <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">কিস্তি</h3>
@@ -29,9 +29,18 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group ">
-                        @Html.LabelFor(model => model.MemberId, new { @class = "col-sm-4 control-label text-left" })
-                        <div class="col-sm-8">
+                        @Html.LabelFor(model => model.MemberId, new { @class = "col-sm-5 control-label text-left" })
+                        <div class="col-sm-7">
                             @Html.DisplayFor(model => model.Member.MemberName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group ">
+                            @Html.LabelFor(model => model.Date, new { @class = "col-sm-5 control-label text-left" })
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.Date, new { @class = "form-control datePicker input-sm", @Value =Model.Date.DateFormat() })
+                                @Html.ValidationMessageFor(model => model.Date)
+                            </div>
                         </div>
                     </div>
 
@@ -50,7 +59,8 @@
                             <td>@Html.LabelFor(model => model.LoanDue)</td>
                         </tr>
                         <tr>
-
+                            @Html.HiddenFor(model=>model.Id)
+                            @Html.HiddenFor(model=>model.MemberId)
                             <td>@Html.TextBoxFor(model => model.Submit,new {@class="form-control" })</td>
                             <td>@Html.TextBoxFor(model => model.Undo,new {@class="form-control" })</td>
                             <td>@Html.TextBoxFor(model => model.Profit,new {@class="form-control" })</td>

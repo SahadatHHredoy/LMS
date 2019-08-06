@@ -3,124 +3,131 @@
     ViewBag.Title = "Home Page";
 }
 <!-- Default box -->
-@Styles.Render("~/Content/jquery-jvectormap")
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title">মূল পাতা </h3>
+        <div class="box-tools">
+            <a target="_blank" class="btn btn-sm btn-success" href="@Url.Action("ConvertHtmlToPdf","Home",new {date= Model.Date })"><i class="fa fa-print"></i></a>
+        </div>
     </div>
     <div class="box-body">
         <div class="row">
-            <div class="col-md-3 col-sm-4 col-xs-8">
-                <div class="info-box">
-                    <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">সর্বমোট লেনদেন</span>
-                        <span class="info-box-number">@Model.OrganizationSetting.TotalTransaction</span>
+            <div class="col-md-6">
+                @using (Html.BeginForm( "Index","Home"))
+                {
+                    <div class="form-group">
+                        @Html.Label("তারিখ =", new { @class = "col-sm-2 control-label text-left" })
+                        <div class="col-sm-3">
+                            @Html.TextBoxFor(model=>model.Date, new { @class = "form-control datePicker input-sm" })
+                            @Html.ValidationMessageFor(model=>model.Date)
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-success btn-sm" type="submit">সার্চ</button>
+                        </div>
                     </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
+                }
             </div>
-            <!-- /.col -->
-            <div class="col-md-3 col-sm-4 col-xs-8">
-                <div class="info-box">
-                    <span class="info-box-icon bg-red"><i class="ion ion-ios-cloud-download-outline"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">ঋণ</span>
-                        <span class="info-box-number">@Model.OrganizationSetting.TotalLoan</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            <!-- fix for small devices only -->
-            <div class="clearfix visible-sm-block"></div>
-
-            <div class="col-md-2 col-sm-4 col-xs-8">
-                <div class="info-box">
-                    <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">খরচ</span>
-                        <span class="info-box-number">@Model.OrganizationSetting.TotalCost</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            <div class="col-md-2 col-sm-4 col-xs-8">
-                <div class="info-box">
-                    <span class="info-box-icon bg-yellow"><i class="fa fa-money"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">লাভ </span>
-                        <span class="info-box-number">@Model.OrganizationSetting.TotalProfit</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div> 
-            <div class="col-md-2 col-sm-4 col-xs-8">
-                <div class="info-box">
-                    <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">সদস্য</span>
-                        <span class="info-box-number">@Model.TotalMember</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
         </div>
-        <!-- /.row -->
-
+        <br/>
         <div class="row">
             <div class="col-md-12">
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">মাসিক প্রতিবেধন </h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p class="text-center">
-                                    <strong>ঋণ : 1 Jan, 2014 - 30 Jul, 2014</strong>
-                                </p>
-
-                                <div class="chart">
-                                    <!-- Sales Chart Canvas -->
-                                    <canvas id="salesChart" style="height: 180px;"></canvas>
-                                </div>
-                                <!-- /.chart-responsive -->
-                            </div>
-                        
-                        </div>
-                        <!-- /.row -->
-                    </div>
-                
-                    <!-- /.box-footer -->
-                </div>
-                <!-- /.box -->
+                <table class="table">
+                    <tr>
+                        <td colspan="6" class="alert-success"></td>
+                    </tr>
+                    <tr>
+                        <td>সঞ্চয় আদায় =</td>
+                        <td>@Html.DisplayFor(model => model.SonchoiAdai)</td> 
+                        <td>সঞ্চয় ফেরত =</td>
+                        <td>@Html.DisplayFor(model => model.SonchoiPirot)</td>
+                        <td>জের টাকা =</td>
+                        <td>@Html.DisplayFor(model => model.JerTaka)</td>
+                    </tr>
+                    <tr>
+                        <td>ঋণ আদায় =</td>
+                        <td>@Html.DisplayFor(model => model.RinAdhai)</td>
+                        <td>ঋণ প্রদান =</td>
+                        <td>@Html.DisplayFor(model => model.RinProdan)</td>
+                        <td>সাকুল্য আদায়=</td>
+                        <td>@Html.DisplayFor(model => model.SakolloAdhai)</td>
+                    </tr> 
+                    <tr>
+                        <td>অন্যান্য আদায় =</td>
+                        <td>@Html.DisplayFor(model => model.OnnannoAdhai)</td>
+                        <td>স্থায়ী আমানত ফেরত =</td>
+                        <td>@Html.DisplayFor(model => model.ThayiAmanotPirot)</td>
+                        <td>মোট =</td>
+                        <td>@Html.DisplayFor(model => model.Mot)</td>
+                    </tr>
+                    <tr>
+                        <td>সাকুল্য আদায় =</td>
+                        <td>@Html.DisplayFor(model => model.SakolloAdhai)</td>
+                        <td>অস্থায়ী আমানত ফেরত =</td>
+                        <td>@Html.DisplayFor(model => model.OsthayiAmanotPirot)</td>
+                        <td>খরচ =</td>
+                        <td>@Html.DisplayFor(model => model.Khoroc)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>অন্যান্য খরচ =</td>
+                        <td>@Html.DisplayFor(model => model.OnonannoKhoroc)</td>  
+                        <td>বর্তমান নগদ স্থিতি =</td>
+                        <td>@Html.DisplayFor(model => model.BortomanNogotAstiti)</td>
+                    </tr>  
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>সাকুল্যে খরচ =</td>
+                        <td>@Html.DisplayFor(model => model.SakolloKhoroc)</td> 
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <table class="table">
+                    <tr>
+                        <td colspan="8" class="alert-info"></td>
+                    </tr>
+                    <tr>
+                        <td>বর্তমান সঞ্চয় স্থিতি =</td>
+                        <td>@Html.DisplayFor(model => model.BortomanSonchoi)</td> 
+                        <td>ঋণ স্থিতি =</td>
+                        <td>@Html.DisplayFor(model => model.RinEsthite)</td>
+                        <td>বর্তমান নগদ স্থিতি =</td>
+                        <td>@Html.DisplayFor(model => model.BortomanNogotAstiti)</td> 
+                        <td>সাকুল্যে =</td>
+                        <td>@Html.DisplayFor(model => model.BortomanNogotAstiti)</td>
+                    </tr>
+                </table>
+                <table class="table">
+                    <tr>
+                        <td colspan="10" class="alert-danger"></td>
+                    </tr>
+                    <tr>
+                        <td>স্থায়ী আমানত = </td>
+                        <td>@Html.DisplayFor(model => model.EsthayeAmanat)</td> 
+                        <td>অস্থায়ী আমানত =</td>
+                        <td>@Html.DisplayFor(model => model.OsthayiAmanot)</td>
+                        <td>সঞ্চয় স্থিতি  =</td>
+                        <td>@Html.DisplayFor(model => model.BortomanSonchoi)</td>  
+                        <td>লাভ   =</td>
+                        <td>@Html.DisplayFor(model => model.Lab)</td>
+                        <td>টোটাল   =</td>
+                        <td>@Html.DisplayFor(model => model.Total)</td>
+                    </tr>
+                </table>
             </div>
-            <!-- /.col -->
         </div>
-      
-
+        <!-- /.col -->
     </div>
+    <!-- /.row -->
 
-    @section scripts{
 
-        @Scripts.Render("~/bundles/jquery.sparkline")
-        @Scripts.Render("~/bundles/jquery-jvectormap")
-        @Scripts.Render("~/bundles/Chart")
-        @Scripts.Render("~/bundles/dashboard")
-    }
-    <!-- /.box-footer-->
 </div>
+
+@section scripts{
+
+
+}
+<!-- /.box-footer-->
+

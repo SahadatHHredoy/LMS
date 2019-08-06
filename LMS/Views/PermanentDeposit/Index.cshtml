@@ -1,0 +1,119 @@
+﻿@using PagedList.Mvc
+@model LMS.Models.PermanentDepositViewModel
+@Styles.Render("~/Content/PagedList")
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">স্থায়ী আমানত  </h3>
+
+        <div class="box-tools">
+            <a class="btn btn-sm btn-success" href="@Url.Action("Add","PermanentDeposit")"><i class="fa fa-plus"></i></a>
+        </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+        <div class="form-horizontal">
+            @using (Html.BeginForm("Index", "PermanentDeposit", FormMethod.Post, new { @class = "", @id = "taxStampDemandSearchForm" }))
+            {
+                <div class="col-md-12">
+                    <div class="form-group col-md-3">
+                        @Html.Label("তারিখ  :", new { @class = "col-md-5 control-label" })
+                        <div class="col-md-7">
+                            @Html.TextBoxFor(model => model.DateFrom, new { @class = "form-control input-sm datePicker", @autocomplete = "off" })
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        @Html.Label("-", new { @class = "col-md-1 control-label" })
+                        <div class="col-md-7">
+                            @Html.TextBoxFor(model => model.DateTo, new { @class = "form-control input-sm datePicker", @autocomplete = "off" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-4">
+                        <button type="submit" class="btn btn-sm btn-success">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                        <a class="btn btn-sm btn-info" href='@Url.Action("Index","PermanentDeposit")'>
+                            <span class="fa fa-refresh"></span>
+                        </a>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+        <table class="table table-bordered">
+            <tr>
+
+                <th>@Html.DisplayNameFor(model => model.PermanentDeposits.FirstOrDefault().Date)</th>
+                <th>@Html.DisplayNameFor(model => model.PermanentDeposits.FirstOrDefault().Depositor)</th>
+                <th>@Html.DisplayNameFor(model => model.PermanentDeposits.FirstOrDefault().FatherName)</th>
+                <th>@Html.DisplayNameFor(model => model.PermanentDeposits.FirstOrDefault().MothersName)</th>
+                <th>@Html.DisplayNameFor(model => model.PermanentDeposits.FirstOrDefault().ParmanentAddress)</th>
+                <th>@Html.DisplayNameFor(model => model.PermanentDeposits.FirstOrDefault().PresentAddress)</th>
+                <th>@Html.DisplayNameFor(model => model.PermanentDeposits.FirstOrDefault().MobileNo)</th>
+                <th>@Html.DisplayNameFor(model => model.PermanentDeposits.FirstOrDefault().Amount)</th>
+                <th></th>
+            </tr>
+
+            @foreach (var loan in Model.PermanentDeposits)
+            {
+                <tr>
+
+                    <th>@loan.Date.DateFormat()</th>
+                    <th>@Html.DisplayFor(model => loan.Depositor)</th>
+                    <th>@Html.DisplayFor(model => loan.FatherName)</th>
+                    <th>@Html.DisplayFor(model => loan.MothersName)</th>
+                    <th>@Html.DisplayFor(model => loan.ParmanentAddress)</th>
+                    <th>@Html.DisplayFor(model => loan.PresentAddress)</th>
+                    <th>@Html.DisplayFor(model => loan.MobileNo)</th>
+                    <th>@(loan.Amount-loan.UndoPermanentDeposits.Sum(s=>s.Amount==null?0:s.Amount))</th>
+
+                    <th>
+                        <a class="btn btn-sm btn-success" href="@Url.Action("Edit","PermanentDeposit",new {id=loan.Id })"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-sm btn-success" href="@Url.Action("Undo","PermanentDeposit",new {id=loan.Id })"><i class="fa fa-recycle"></i></a>
+
+                    </th>
+
+                </tr>
+                if (loan.UndoPermanentDeposits.Any())
+                {
+                    <tr>
+                        <td colspan="10">
+                            <div class="col-md-5">
+                                <table class="table table-responsive table-bordered">
+                                    <tr>
+                                        <td colspan="3" class="alert-success">ফেরতের বিবরণ</td>
+                                    </tr>
+                                    <tr class="alert-success">
+                                        <td>@Html.DisplayNameFor(model => loan.UndoPermanentDeposits.FirstOrDefault().Date)</td>
+                                        <td>@Html.DisplayNameFor(model => loan.UndoPermanentDeposits.FirstOrDefault().Amount)</td>
+                                        <td></td>
+                                    </tr>
+                                    @foreach (var undo in loan.UndoPermanentDeposits)
+                                    {
+                                        <tr>
+                                            <td>@undo.Date.DateFormat()</td>
+                                            <td>@Html.DisplayFor(model => undo.Amount)</td>
+                                            <td>  <a class="btn btn-sm btn-success" href="@Url.Action("EditUndo", "PermanentDeposit", new { id = undo.Id })"><i class="fa fa-edit"></i></a></td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+
+    </div>
+    <div class="box-footer">
+        <div class="main-pagination">
+            Page @(Model.PermanentDeposits.PageCount < Model.PermanentDeposits.PageNumber ? 0 : Model.PermanentDeposits.PageNumber) of @Model.PermanentDeposits.PageCount
+            @Html.PagedListPager(Model.PermanentDeposits, Page => Url.Action("Index", "PermanentDeposit", new RouteValueDictionary() { { "Page", Page }, { "PageSize", Model.PageSize }, { "DateFrom", Model.DateFrom }, { "DateTo", Model.DateTo } }))
+        </div>
+    </div>
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->

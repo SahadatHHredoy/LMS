@@ -58,6 +58,9 @@
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Select.HtmlToPdf, Version=19.1.0.0, Culture=neutral, PublicKeyToken=e0ae9f6e27a97018, processorArchitecture=MSIL">
+      <HintPath>..\packages\Select.HtmlToPdf.19.1.0\lib\net40\Select.HtmlToPdf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -67,6 +70,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -139,6 +143,8 @@
     <Compile Include="Controllers\InstallmentController.cs" />
     <Compile Include="Controllers\LoanController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\PermanentDepositController.cs" />
+    <Compile Include="Controllers\TemporaryDepositController.cs" />
     <Compile Include="Entities\Cost.cs" />
     <Compile Include="Entities\Entry.cs" />
     <Compile Include="Entities\Group.cs" />
@@ -146,20 +152,20 @@
     <Compile Include="Entities\LMSDbContext.cs" />
     <Compile Include="Entities\Loan.cs" />
     <Compile Include="Entities\Member.cs" />
-    <Compile Include="Entities\OrganizationSetting.cs" />
+    <Compile Include="Entities\PermanentDeposit.cs" />
+    <Compile Include="Entities\TemporaryDeposit.cs" />
+    <Compile Include="Entities\UndoPermanentDeposit.cs" />
+    <Compile Include="Entities\UndoTemporaryDeposit.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907080613588_migForIntial.cs" />
-    <Compile Include="Migrations\201907080613588_migForIntial.Designer.cs">
-      <DependentUpon>201907080613588_migForIntial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907110656329_migForCost.cs" />
-    <Compile Include="Migrations\201907110656329_migForCost.Designer.cs">
-      <DependentUpon>201907110656329_migForCost.cs</DependentUpon>
+    <Compile Include="Migrations\201908060651140_migForIntial.cs" />
+    <Compile Include="Migrations\201908060651140_migForIntial.Designer.cs">
+      <DependentUpon>201908060651140_migForIntial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\GroupModel.cs" />
+    <Compile Include="Models\Home.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\InstallmentModel.cs" />
     <Compile Include="Models\LoanModel.cs" />
@@ -249,13 +255,23 @@
     <Content Include="Views\Loan\Edit.cshtml" />
     <Content Include="Views\Installment\Edit.cshtml" />
     <Content Include="Views\Cost\Edit.cshtml" />
+    <Content Include="Views\PermanentDeposit\Index.cshtml" />
+    <Content Include="Views\TemporaryDeposit\Index.cshtml" />
+    <Content Include="Views\PermanentDeposit\Add.cshtml" />
+    <Content Include="Views\TemporaryDeposit\Add.cshtml" />
+    <Content Include="Views\Member\Details.cshtml" />
+    <Content Include="Views\PermanentDeposit\Edit.cshtml" />
+    <Content Include="Views\PermanentDeposit\Undo.cshtml" />
+    <Content Include="Views\PermanentDeposit\EditUndo.cshtml" />
+    <Content Include="Views\TemporaryDeposit\Edit.cshtml" />
+    <Content Include="Views\TemporaryDeposit\EditUndo.cshtml" />
+    <Content Include="Views\TemporaryDeposit\Undo.cshtml" />
+    <Content Include="Views\Home\GeneratePdfOrPrint.cshtml" />
+    <Content Include="Views\Member\GeneratePdfOrPrint.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201907080613588_migForIntial.resx">
-      <DependentUpon>201907080613588_migForIntial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907110656329_migForCost.resx">
-      <DependentUpon>201907110656329_migForCost.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908060651140_migForIntial.resx">
+      <DependentUpon>201908060651140_migForIntial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

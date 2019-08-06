@@ -33,23 +33,8 @@ namespace LMS.Models
                 installment.Date = base.Date;
                 _context.Installments.Add(installment);
                 _context.SaveChanges();
-                var member = _context.Members.Find(installment.MemberId);
-                if (member != null)
-                {
-                    member.SavingAmount += installment.Submit??0;
-                    member.DueLoan -= installment.Payment??0;
-                    _context.Entry(member).State = System.Data.Entity.EntityState.Modified;
-                    _context.SaveChanges();
-                }
-                var orgSetting = _context.OrganizationSettings.FirstOrDefault();
-                if (orgSetting != null)
-                {
-                    orgSetting.TotalTransaction += (installment.Submit??0+installment.Profit??0+ installment.Payment??0);
-                    orgSetting.TotalLoan -= installment.Payment??0;
-                    orgSetting.TotalSaving += installment.Submit??0;
-                    _context.Entry(orgSetting).State = EntityState.Modified;
-                    _context.SaveChanges();
-                }
+               
+               
             }
         }
     }

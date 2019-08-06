@@ -1,0 +1,95 @@
+﻿@model LMS.Entities.UndoTemporaryDeposit
+@{
+    ViewBag.Title = "Add";
+}
+
+@using (Html.BeginForm("EditUndo", "TemporaryDeposit", FormMethod.Post, new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">আমানত ফেরত  </h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.HiddenFor(model => model.TemporaryDepositId)
+                    @Html.HiddenFor(model => model.Id)
+                    <table class="table table-bordered">
+                        <tr>
+                            <td colspan="8" class="alert-success">আমানতের বিবরণ </td>
+                        </tr>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.TemporaryDeposit.Date)</th>
+                            <th>@Html.DisplayNameFor(model => model.TemporaryDeposit.Depositor)</th>
+                            <th>@Html.DisplayNameFor(model => model.TemporaryDeposit.FatherName)</th>
+                            <th>@Html.DisplayNameFor(model => model.TemporaryDeposit.MothersName)</th>
+                            <th>@Html.DisplayNameFor(model => model.TemporaryDeposit.ParmanentAddress)</th>
+                            <th>@Html.DisplayNameFor(model => model.TemporaryDeposit.PresentAddress)</th>
+                            <th>@Html.DisplayNameFor(model => model.TemporaryDeposit.MobileNo)</th>
+                            <th>@Html.DisplayNameFor(model => model.TemporaryDeposit.Amount)</th>
+
+                        </tr>
+                        <tr>
+                            <th>@Model.TemporaryDeposit.Date.DateFormat()</th>
+                            <th>@Html.DisplayFor(model => model.TemporaryDeposit.Depositor)</th>
+                            <th>@Html.DisplayFor(model => model.TemporaryDeposit.FatherName)</th>
+                            <th>@Html.DisplayFor(model => model.TemporaryDeposit.MothersName)</th>
+                            <th>@Html.DisplayFor(model => model.TemporaryDeposit.ParmanentAddress)</th>
+                            <th>@Html.DisplayFor(model => model.TemporaryDeposit.PresentAddress)</th>
+                            <th>@Html.DisplayFor(model => model.TemporaryDeposit.MobileNo)</th>
+                            <th>@Html.DisplayFor(model => model.TemporaryDeposit.Amount)</th>
+                        </tr>
+
+                    </table>
+                    <div class="col-md-6">
+
+                        <div class="form-group ">
+                            @Html.LabelFor(model => model.Date, new { @class = "col-sm-4 control-label text-left" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.Date, new { @class = "form-control datePicker",@Value=Model.Date.DateFormat() })
+                                @Html.ValidationMessageFor(model => model.Date)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group ">
+                            @Html.LabelFor(model => model.Amount, new { @class = "col-sm-4 control-label text-left" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.Amount, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Amount)
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <a href="@Url.Action("Index","Cost")" class="btn btn-danger">ক্যান্সেল</a>
+            <button type="submit" class="btn btn-info pull-right">সেভ</button>
+        </div>
+        <!-- /.box-footer-->
+    </div>
+}
+<!-- /.box -->
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+
+
+
+

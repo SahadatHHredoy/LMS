@@ -50,23 +50,8 @@ namespace LMS.Controllers
                     Status = (byte)EnumStatus.Active
                 });
                 _context.SaveChanges();
-
-                var member = _context.Members.Find(model.MemberId);
-                if (member != null)
-                {
-                    member.DueLoan = model.PayableAmount;
-                    _context.Entry(member).State = EntityState.Modified;
-                    _context.SaveChanges();
-                }
-                var orgSetting = _context.OrganizationSettings.FirstOrDefault();
-                if (orgSetting != null)
-                {
-                    orgSetting.TotalTransaction += model.PayableAmount;
-                    orgSetting.TotalLoan += model.PayableAmount;
-                    orgSetting.TotalProfit += (model.ProfitAmount + model.ServiceAmount);
-                    _context.Entry(orgSetting).State = EntityState.Modified;
-                    _context.SaveChanges();
-                }
+             
+              
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -100,27 +85,7 @@ namespace LMS.Controllers
                 var loan = _context.Loans.Find(model.Id);
                 if (loan != null)
                 {
-                    var member = _context.Members.Find(model.MemberId);
-                    if (member != null)
-                    {
-                        member.DueLoan -= loan.PayableAmount;
-                        member.DueLoan += model.PayableAmount;
-                        _context.Entry(member).State = EntityState.Modified;
-                        _context.SaveChanges();
-                    }
-                    var orgSetting = _context.OrganizationSettings.FirstOrDefault();
-                    if (orgSetting != null)
-                    {
-                        orgSetting.TotalTransaction -= loan.PayableAmount;
-                        orgSetting.TotalLoan -= loan.PayableAmount;
-                        orgSetting.TotalProfit -= (loan.ProfitAmount + loan.ServiceAmount);
-                        orgSetting.TotalTransaction += model.PayableAmount;
-                        orgSetting.TotalLoan += model.PayableAmount;
-                        orgSetting.TotalProfit += (model.ProfitAmount + model.ServiceAmount);
-                        _context.Entry(orgSetting).State = EntityState.Modified;
-                        _context.SaveChanges();
-                    }
-
+                   
                     loan.Date = model.Date;
                     loan.MemberId = model.MemberId;
                     loan.ProjectName = model.ProjectName;

@@ -41,5 +41,19 @@ namespace LMS.Controllers
         {
             return View(_context.Installments.Find(id));
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Installment installment)
+        {
+            if (ModelState.IsValid)
+            {
+               
+                _context.Entry(installment).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(installment);
+          
+        }
     }
 }

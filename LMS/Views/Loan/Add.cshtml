@@ -1,5 +1,5 @@
 ﻿@model LMS.Models.LoanModel
-
+@using LMS.Models
 
 @using (Html.BeginForm("Add", "Loan", FormMethod.Post, new { @class = "form-horizontal", @enctype = "multipart/form-data" }))
 {
@@ -18,7 +18,12 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-6">
-
+                    <div class="form-group">
+                        @Html.Label("ব্যালেন্স   :", new { @class = "col-md-5 control-label" })
+                        <div class="col-md-7">
+                            @(new HomeModel().OpeningBalance(DateTime.Now))
+                        </div>
+                    </div>
                     <div class="form-group ">
                         @Html.Label("সদস্যের ছবি ", new { @class = "col-sm-4 control-label text-left" })
                         <div class="col-sm-8">
@@ -38,7 +43,7 @@
                             @Html.TextBoxFor(model => model.ProjectName, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.ProjectName)
                         </div>
-                    </div> 
+                    </div>
                     <div class="form-group ">
                         @Html.LabelFor(model => model.TotalInstallment, new { @class = "col-sm-4 control-label text-left" })
                         <div class="col-sm-8">
@@ -52,7 +57,7 @@
                             <label> @Html.RadioButtonFor(model => model.InstallmentType, "Daily") দৈনিক </label>
                             <label> @Html.RadioButtonFor(model => model.InstallmentType, "Monthly") মাসিক</label>
                             <label>@Html.RadioButtonFor(model => model.InstallmentType, "Weekly") সাপ্তাহিক</label>
-                            <br/>
+                            <br />
                             @Html.ValidationMessageFor(model => model.InstallmentType)
                         </div>
                     </div>

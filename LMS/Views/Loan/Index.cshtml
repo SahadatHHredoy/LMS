@@ -1,4 +1,5 @@
 ﻿@model LMS.Models.LoanViewModel
+@using LMS.Models
 @using PagedList.Mvc
 @Styles.Render("~/Content/PagedList")
 <div class="box">
@@ -15,6 +16,7 @@
             @using (Html.BeginForm("Index", "Loan", FormMethod.Post, new { @class = "", @id = "taxStampDemandSearchForm" }))
             {
                 <div class="col-md-12">
+                  
                     <div class="form-group col-md-3">
                         @Html.Label("তারিখ  :", new { @class = "col-md-5 control-label" })
                         <div class="col-md-7">
@@ -96,7 +98,7 @@
     <div class="box-footer">
         <div class="main-pagination">
             Page @(Model.LoanPageList.PageCount < Model.LoanPageList.PageNumber ? 0 : Model.LoanPageList.PageNumber) of @Model.LoanPageList.PageCount
-            @Html.PagedListPager(Model.LoanPageList, Page => Url.Action("Index", "Cost", new RouteValueDictionary() { { "Page", Page }, { "PageSize", Model.PageSize }, { "DateFrom", Model.DateFrom }, { "DateTo", Model.DateTo }, { "MemberId", Model.MemberId } }))
+            @Html.PagedListPager(Model.LoanPageList, Page => Url.Action("Index", "Loan", new RouteValueDictionary() { { "Page", Page }, { "PageSize", Model.PageSize }, { "DateFrom", Model.DateFrom }, { "DateTo", Model.DateTo }, { "MemberId", Model.MemberId } }))
         </div>
     </div>
 </div>

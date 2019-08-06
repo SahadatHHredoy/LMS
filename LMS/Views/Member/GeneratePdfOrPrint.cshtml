@@ -1,0 +1,194 @@
+﻿@model LMS.Entities.Member
+@{
+    Layout = null;
+}
+<!-- Bootstrap 3.3.7 -->
+@Styles.Render("~/Content/bootstrap")
+<!-- Font Awesome -->
+@Styles.Render("~/Content/font-awesome")
+<!-- Ionicons -->
+@Styles.Render("~/Content/ionicons")
+<!-- Theme style -->
+@Styles.Render("~/Content/adminLTE")
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+     folder instead of downloading all of them to reduce the load. -->
+@Styles.Render("~/Content/allskins")
+@Styles.Render("~/Content/datePicker")
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">সদস্য</h3>
+        
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <tr>
+                        <td colspan="4" class="alert-success">ব্যক্তিগত তথ্য</td>
+                    </tr>
+                    <tr>
+                        <td>   @Html.Label("ছবি")</td>
+                        <td>
+                            @if (Model.Image != null)
+                            {
+                                <img height="100" width="150" src="@Url.Content(Model.Image)">
+                            }
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.MemberName)</td>
+                        <td>@Html.DisplayFor(model => model.MemberName)</td>
+                        <td>  @Html.LabelFor(model => model.FatherName)</td>
+                        <td>  @Html.DisplayFor(model => model.FatherName)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.MothersName)</td>
+                        <td>@Html.DisplayFor(model => model.MothersName)</td>
+                        <td>@Html.LabelFor(model => model.PresentAddress)</td>
+                        <td>@Html.DisplayFor(model => model.PresentAddress)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.ParmanentAddress)</td>
+                        <td>@Html.DisplayFor(model => model.ParmanentAddress)</td>
+                        <td>@Html.LabelFor(model => model.Religion)</td>
+                        <td>@Html.DisplayFor(model => model.Religion)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.Nationlity)</td>
+                        <td>@Html.DisplayFor(model => model.Nationlity)</td>
+                        <td>@Html.LabelFor(model => model.GroupId)</td>
+                        <td>@Html.DisplayFor(model => model.Group.GroupName)</td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(model => model.DateOfBirth)</td>
+                        <td>@Html.DisplayFor(model => model.DateOfBirth)</td>
+                        <td>@Html.LabelFor(model => model.MobileNo)</td>
+                        <td>  @Html.DisplayFor(model => model.MobileNo)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(model => model.NID)</td>
+                        <td> @Html.DisplayFor(model => model.NID)</td>
+                        <td>@Html.LabelFor(model => model.BloodGroup)</td>
+                        <td>  @Html.DisplayFor(model => model.BloodGroup)</td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(model => model.PartnerName)</td>
+                        <td> @Html.DisplayFor(model => model.PartnerName)</td>
+                        <td> @Html.LabelFor(model => model.EduQualification)</td>
+                        <td> @Html.DisplayFor(model => model.EduQualification)</td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(model => model.Profession)</td>
+                        <td> @Html.DisplayFor(model => model.Profession)</td>
+                        <td> @Html.LabelFor(model => model.OfficeAddress)</td>
+                        <td> @Html.DisplayFor(model => model.OfficeAddress)</td>
+                    </tr>
+                    <tr>
+                        <td> সঞ্চয় স্থিতি </td>
+                        <td> @(Model.Installments.Sum(s => s.Submit) - Model.Installments.Sum(s => s.Undo))</td>
+                        <td> ঋণ স্থিতি  </td>
+                        <td>@(Model.Loans.Sum(s => s.PayableAmount) - Model.Installments.Sum(s => s.Payment))</td>
+                    </tr>
+                </table>
+                <table class="table table-bordered">
+                    <tr>
+                        <td class="alert-success" colspan="7">ঋণ সমূহ</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Loans.FirstOrDefault().ProjectName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Loans.FirstOrDefault().LoanAmount)</th>
+                        <th>@Html.DisplayNameFor(model => model.Loans.FirstOrDefault().ProfitAmount)</th>
+                        <th>@Html.DisplayNameFor(model => model.Loans.FirstOrDefault().ServiceAmount)</th>
+                        <th>@Html.DisplayNameFor(model => model.Loans.FirstOrDefault().PayableAmount)</th>
+                        <th>@Html.DisplayNameFor(model => model.Loans.FirstOrDefault().Status)</th>
+                   
+
+                    </tr>
+                    @{
+                        int i = 1;
+                        foreach (var loan in Model.Loans)
+                        {
+                            <tr>
+
+                                <th>@Html.DisplayFor(model => loan.ProjectName)</th>
+                                <th>@Html.DisplayFor(model => loan.LoanAmount)</th>
+                                <th>@Html.DisplayFor(model => loan.ProfitAmount)</th>
+                                <th>@Html.DisplayFor(model => loan.ServiceAmount)</th>
+                                <th>@Html.DisplayFor(model => loan.PayableAmount)</th>
+                                <th>
+                                    <span class="badge bg-green-active">
+                                        @Enum.GetName(typeof(EnumStatus), loan.Status)
+                                    </span>
+                                </th>
+                                
+
+                            </tr>
+                        }
+                    }
+                </table>
+                <table class="table table-bordered">
+                    <tr>
+                        <td colspan="8" class="text-center alert-info"> কিস্তি </td>
+                    </tr>
+                    <tr class="text-center bg-green">
+                        <td></td>
+                        <td colspan="4">সঞ্চয় হিসাব</td>
+                        <td colspan="3">ঋণের হিসাব </td>
+                    </tr>
+                    <tr class="text-center bg-green-active">
+
+
+                        <td>@Html.LabelFor(model => model.Installments.FirstOrDefault().Date)</td>
+                        <td>@Html.LabelFor(model => model.Installments.FirstOrDefault().Submit)</td>
+                        <td>@Html.LabelFor(model => model.Installments.FirstOrDefault().Undo)</td>
+                        <td>@Html.LabelFor(model => model.Installments.FirstOrDefault().Profit)</td>
+                        <td>@Html.LabelFor(model => model.Installments.FirstOrDefault().SavingAmount)</td>
+                        <td>@Html.LabelFor(model => model.Installments.FirstOrDefault().InstallmentNo)</td>
+                        <td>@Html.LabelFor(model => model.Installments.FirstOrDefault().Payment)</td>
+                        <td>@Html.LabelFor(model => model.Installments.FirstOrDefault().LoanDue)</td>
+                    </tr>
+                    @{
+
+                        foreach (var installment in Model.Installments)
+                        {
+                            var loans = Model.Loans.Where(s => s.Date <= installment.Date);
+                            var installments = Model.Installments.Where(s => s.Date <= installment.Date);
+                            <tr>
+                                <th>@installment.Date.DateFormat()</th>
+                                <th>@Html.DisplayFor(model => installment.Submit)</th>
+                                <th>@Html.DisplayFor(model => installment.Undo)</th>
+                                <th>@Html.DisplayFor(model => installment.Profit)</th>
+                                <th>@installments.Sum(s => s.Submit)</th>
+                                <th>@Html.DisplayFor(model => installment.InstallmentNo)</th>
+                                <th>@Html.DisplayFor(model => installment.Payment)</th>
+                                <th>@(loans.Sum(s => s.PayableAmount) - installments.Sum(s => s.Payment))</th>
+
+
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /.box-body -->
+  
+    <!-- /.box-footer-->
+</div>
+@Scripts.Render("~/bundles/jquery")
+<!-- Bootstrap 3.3.7 -->
+@Scripts.Render("~/bundles/bootstrap")
+<!-- SlimScroll -->
+@Scripts.Render("~/bundles/slimscroll")
+<!-- FastClick -->
+@Scripts.Render("~/bundles/fastclick")
+<!-- AdminLTE App -->
+@Scripts.Render("~/bundles/adminlte")
+<!-- AdminLTE for demo purposes -->
+@Scripts.Render("~/bundles/demo")
+@Scripts.Render("~/bundles/datePicker")
+<!-- /.box-footer-->

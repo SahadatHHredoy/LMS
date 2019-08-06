@@ -53,6 +53,9 @@ D:\Projects\LMS\LMS\bin\EntityFramework.SqlServer.dll
 D:\Projects\LMS\LMS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 D:\Projects\LMS\LMS\bin\Microsoft.Web.Infrastructure.dll
 D:\Projects\LMS\LMS\bin\Newtonsoft.Json.dll
+D:\Projects\LMS\LMS\bin\PagedList.dll
+D:\Projects\LMS\LMS\bin\PagedList.Mvc.dll
+D:\Projects\LMS\LMS\bin\Select.HtmlToPdf.dll
 D:\Projects\LMS\LMS\bin\System.Web.Helpers.dll
 D:\Projects\LMS\LMS\bin\System.Web.Mvc.dll
 D:\Projects\LMS\LMS\bin\System.Web.Optimization.dll
@@ -63,6 +66,9 @@ D:\Projects\LMS\LMS\bin\System.Web.WebPages.Razor.dll
 D:\Projects\LMS\LMS\bin\WebGrease.dll
 D:\Projects\LMS\LMS\bin\EntityFramework.xml
 D:\Projects\LMS\LMS\bin\EntityFramework.SqlServer.xml
+D:\Projects\LMS\LMS\bin\PagedList.xml
+D:\Projects\LMS\LMS\bin\PagedList.Mvc.xml
+D:\Projects\LMS\LMS\bin\Select.HtmlToPdf.xml
 D:\Projects\LMS\LMS\bin\System.Web.Helpers.xml
 D:\Projects\LMS\LMS\bin\System.Web.Mvc.xml
 D:\Projects\LMS\LMS\bin\System.Web.Optimization.xml
@@ -73,11 +79,11 @@ D:\Projects\LMS\LMS\bin\System.Web.WebPages.Razor.xml
 D:\Projects\LMS\LMS\bin\Newtonsoft.Json.xml
 D:\Projects\LMS\LMS\bin\Antlr3.Runtime.pdb
 D:\Projects\LMS\LMS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Projects\LMS\LMS\obj\Release\LMS.csprojAssemblyReference.cache
-D:\Projects\LMS\LMS\obj\Release\LMS.Migrations.migForIntial.resources
-D:\Projects\LMS\LMS\obj\Release\LMS.Migrations.migForCost.resources
-D:\Projects\LMS\LMS\obj\Release\LMS.csproj.GenerateResource.cache
+D:\Projects\LMS\LMS\bin\Select.Html.dep
 D:\Projects\LMS\LMS\obj\Release\LMS.csproj.CoreCompileInputs.cache
 D:\Projects\LMS\LMS\obj\Release\LMS.csproj.CopyComplete
 D:\Projects\LMS\LMS\obj\Release\LMS.dll
 D:\Projects\LMS\LMS\obj\Release\LMS.pdb
+D:\Projects\LMS\LMS\obj\Release\LMS.csprojAssemblyReference.cache
+D:\Projects\LMS\LMS\obj\Release\LMS.Migrations.migForIntial.resources
+D:\Projects\LMS\LMS\obj\Release\LMS.csproj.GenerateResource.cache

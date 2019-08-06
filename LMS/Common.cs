@@ -9,7 +9,11 @@ namespace LMS
     {
         public static string DateFormat(this DateTime date)
         {
-            return string.Format("{0:dd-MMM-yyyy}", date);
+            return string.Format("{0:dd-MM-yyyy}", date);
+        }
+        public static string DateFormat(this DateTime? date)
+        {
+            return date.HasValue? string.Format("{0:dd-MM-yyyy}", date):"";
         }
     }
 

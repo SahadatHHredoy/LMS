@@ -1,6 +1,5 @@
 namespace LMS.Migrations
 {
-    using LMS.Entities;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -19,17 +18,6 @@ namespace LMS.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-            var orgSetting = new OrganizationSetting()
-            {
-                OrganizationName = "Varasha Unnayan Samity",
-                TotalCost =0,
-                TotalLoan =0,
-                TotalProfit =0,
-                TotalSaving =0,
-                TotalTransaction =0
-            };
-            context.OrganizationSettings.AddOrUpdate(s => s.OrganizationName, orgSetting);
-            context.SaveChanges();
         }
     }
 }
